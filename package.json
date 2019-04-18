@@ -1,5 +1,5 @@
 {
-  "name": "excel-reader",
+  "name": "simple-excel-reader",
   "version": "1.0.0",
   "description": "simple Excel (.xlsx) sheet data extractor",
   "main": "index.js",

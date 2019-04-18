@@ -1,4 +1,4 @@
-# Excel Reader (excel-reader)
+# Simple Excel Reader (simple-excel-reader)
 
 Simple node.js excel file (.xlsx) data extractor for
 "**row oriented**" data files with known number of sheets
@@ -6,14 +6,14 @@ Simple node.js excel file (.xlsx) data extractor for
 ## Installation
 
 ```bash
-npm install --save excel-reader
+npm install --save simple-excel-reader
 ```
 
 ## Usage
 
 ```javascript
 // SETUP
-const ExcelReader = require('excel-reader')
+const ExcelReader = require('simple-excel-reader')
 const filePath = './directory/filename.xlsx'
 /*
  * The 'sheetNames' array contains values to be used when calling
