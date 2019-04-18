@@ -48,6 +48,12 @@ excelReader
   })
 ```
 
+## API
+
+### **instance.getWorkBook()**
+
+### **instance.getWorkSheet()**
+
 ## Notes
 
 Uses [excel-as-json](https://www.npmjs.com/package/excel-as-json) to
