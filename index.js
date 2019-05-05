@@ -29,6 +29,7 @@ module.exports = class ExcelReader {
   }
 
   _parseRecord(headings, row) {
+    const mapFn = value => value.trim()
     return headings.reduce((record, columnData, colCount) => {
       const {key, isArray} = columnData
       const rawValue = row.getCell(colCount + 1).value
@@ -36,7 +37,7 @@ module.exports = class ExcelReader {
         ? rawValue
         : !rawValue
         ? []
-        : rawValue.split(this._delimiter).trim()
+        : rawValue.split(this._delimiter).map(mapFn)
       return record
     }, {})
   }
