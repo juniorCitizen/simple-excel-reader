@@ -1,7 +1,7 @@
 # Simple Excel Reader (simple-excel-reader)
 
 Simple node.js excel file (.xlsx) data extractor for
-"**row oriented**" data files with known number of sheets
+"**row oriented**" data files
 
 ## Installation
 
@@ -15,47 +15,32 @@ npm install --save simple-excel-reader
 // SETUP
 const ExcelReader = require('simple-excel-reader')
 const filePath = './directory/filename.xlsx'
-/*
- * The 'sheetNames' array contains values to be used when calling
- * .getWorkSheet(sheetName).  These values are not actually
- * checked against the actual excel worksheet names
- *
- * The ordering is important though, in the sense that when
- * .getWorkSheet('oranges') is called, the desired data is actually
- * the data from the second sheet of the excel file.  Although the
- * actual sheet name may actually be 'smelly socks'.
- */
-const sheetNames = ['apples', 'oranges', 'watermelons']
-const excelReader = new ExcelReader(filePath, sheetNames)
+const excelReader = new ExcelReader(filePath)
 
 // DATA EXTRACTION
-// get the full workbook data in an object
-// with sheet names as object keys
+// get the full workbook recordsets
 excelReader
-  .getWorkBook()
-  .then(datasets => {
-    console.log(datasets)
-    // get the data in array from from the 2nd
-    // sheet of the workbook
-    return excelReader.getWorkSheet('oranges')
+  .getWorkbook()
+  .then(recordsets => {
+    console.log(recordsets)
+    // get the name of each worksheet
+    return excelReader.getWorksheetNames()
   })
-  .then(dataset => {
-    console.log(dataset)
-    return Promise.resolve()
+  .then(worksheetNames => {
+    console.log(worksheetNames)
+    // get the records from a particular worksheet
+    return excelReader.getWorksheet(worksheetNames[2])
   })
-  .catch(error => {
-    console.log(error)
-  })
+  .then(records => console.log(records))
+  .catch(error => console.error(error))
 ```
 
 ## API
 
-### **instance.getWorkBook()**
+### **new ExcelReader(filePath, delimiter)**
 
-### **instance.getWorkSheet()**
+### **instance.getWorkbook()**
 
-## Notes
+### **instance.getWorksheetNames()**
 
-Uses [excel-as-json](https://www.npmjs.com/package/excel-as-json) to
-parse data, so check out its docs about the available source data file
-structure.
+### **instance.getWorksheet(worksheetName)**

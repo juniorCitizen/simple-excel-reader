@@ -2,14 +2,15 @@
   "name": "simple-excel-reader",
   "version": "1.0.3",
   "description": "simple Excel (.xlsx) sheet data extractor",
-  "main": "index.js",
+  "main": "./index.js",
   "author": "juniorCitizen",
   "license": "MIT",
-  "dependencies": {
-    "excel-as-json": "^2.0.2"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juniorCitizen/simple-excel-reader.git"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dependencies": {
+    "exceljs": "^1.10.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -17,10 +18,12 @@
     "eslint-config-prettier": "^4.2.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsdoc": "^4.8.3",
     "eslint-plugin-node": "^9.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "prettier": "^1.17.0"
-  }
+  },
+  "scripts": {}
 }
