@@ -1,5 +1,5 @@
 const path = require('path')
-const ExcelJs = require('exceljs')
+const ExcelJs = require('exceljs/modern.nodejs')
 
 module.exports = class ExcelReader {
   /**
@@ -68,7 +68,7 @@ module.exports = class ExcelReader {
    *
    * The async Array.reduce() function is made possible by using the following guide: https://css-tricks.com/why-using-reduce-to-sequentially-resolve-promises-works/.
    *
-   * @returns {Object} Javascript object holding records from each worksheet, with the worksheet names as keys.
+   * @returns {object} Javascript object holding records from each worksheet, with the worksheet names as keys.
    */
   async getWorkbook() {
     try {
