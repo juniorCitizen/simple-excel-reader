@@ -48,19 +48,15 @@ module.exports = class ExcelReader {
    * @returns {Array} Names of every worksheet.
    */
   async getWorksheetNames() {
-    try {
-      if (!this._workbook) {
-        this._workbook = new ExcelJs.Workbook()
-        await this._workbook.xlsx.readFile(this._filePath)
-      }
-      this._worksheetNames = []
-      this._workbook.eachSheet(worksheet => {
-        this._worksheetNames.push(worksheet.name)
-      })
-      return this._worksheetNames
-    } catch (error) {
-      throw error
+    if (!this._workbook) {
+      this._workbook = new ExcelJs.Workbook()
+      await this._workbook.xlsx.readFile(this._filePath)
     }
+    this._worksheetNames = []
+    this._workbook.eachSheet(worksheet => {
+      this._worksheetNames.push(worksheet.name)
+    })
+    return this._worksheetNames
   }
 
   /**
@@ -71,22 +67,18 @@ module.exports = class ExcelReader {
    * @returns {object} Javascript object holding records from each worksheet, with the worksheet names as keys.
    */
   async getWorkbook() {
-    try {
-      await this.getWorksheetNames()
-      const recordset = {}
-      await this._worksheetNames.reduce((asyncAccumulator, worksheetName) => {
-        return asyncAccumulator
-          .then(() => this.getWorksheet(worksheetName))
-          .then(records => {
-            recordset[worksheetName] = records
-            return Promise.resolve()
-          })
-          .catch(error => Promise.reject(error))
-      }, Promise.resolve())
-      return recordset
-    } catch (error) {
-      throw error
-    }
+    await this.getWorksheetNames()
+    const recordset = {}
+    await this._worksheetNames.reduce((asyncAccumulator, worksheetName) => {
+      return asyncAccumulator
+        .then(() => this.getWorksheet(worksheetName))
+        .then(records => {
+          recordset[worksheetName] = records
+          return Promise.resolve()
+        })
+        .catch(error => Promise.reject(error))
+    }, Promise.resolve())
+    return recordset
   }
 
   /**
@@ -96,20 +88,16 @@ module.exports = class ExcelReader {
    * @returns {Array} Array of javascript objects holding an object (data record) with column heading as keys.
    */
   async getWorksheet(worksheetName) {
-    try {
-      if (!this._workbook) {
-        this._workbook = new ExcelJs.Workbook()
-        await this._workbook.xlsx.readFile(this._filePath)
-      }
-      const worksheet = this._workbook.getWorksheet(worksheetName)
-      const headings = this._parseHeadings(worksheet.getRow(1))
-      const records = []
-      for (let rowCount = 2; rowCount <= worksheet.actualRowCount; rowCount++) {
-        records.push(this._parseRecord(headings, worksheet.getRow(rowCount)))
-      }
-      return records
-    } catch (error) {
-      throw error
+    if (!this._workbook) {
+      this._workbook = new ExcelJs.Workbook()
+      await this._workbook.xlsx.readFile(this._filePath)
     }
+    const worksheet = this._workbook.getWorksheet(worksheetName)
+    const headings = this._parseHeadings(worksheet.getRow(1))
+    const records = []
+    for (let rowCount = 2; rowCount <= worksheet.actualRowCount; rowCount++) {
+      records.push(this._parseRecord(headings, worksheet.getRow(rowCount)))
+    }
+    return records
   }
 }
